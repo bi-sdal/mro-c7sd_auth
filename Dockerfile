@@ -1,4 +1,4 @@
-FROM dads2busy/c7-ssh-ldap
+FROM sdal/ldap-ssh-c7
 MAINTAINER "Aaron D. Schroeder" <aschroed@vt.edu>
 
 # Install R Package Prerequisites
