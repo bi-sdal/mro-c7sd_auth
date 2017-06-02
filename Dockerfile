@@ -48,4 +48,7 @@ RUN Rscript -e "install.packages('highcharter')"
 RUN Rscript -e "devtools::install_github('bwlewis/rthreejs')"
 RUN Rscript -e "devtools::install_github('bi-sdal/sdalr')"
 
+# check for latest updates
+RUN Rscript -e "update.packages(ask = FALSE)"
+
 CMD ["/usr/sbin/init"]
