@@ -19,7 +19,7 @@ RUN \
 
 RUN /tmp/microsoft-r-open/install.sh -a -u
 
-RUN wget https://raw.githubusercontent.com/bi-sdal/r-package-install/master/install.R
+RUN wget https://raw.githubusercontent.com/bi-sdal/dockerfiles/master/install.R
 
 # Configure CRAN Repositories
 RUN echo "r <- getOption('repos'); r['CRAN'] <- 'https://cloud.r-project.org/'; options(repos = r);" > ~/.Rprofile
