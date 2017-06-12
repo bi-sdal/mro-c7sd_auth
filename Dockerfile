@@ -7,7 +7,7 @@ RUN yum install -y openssl-devel && \
     yum install -y postgresql-devel && \
     yum install -y libcurl libcurl-devel xml2 libxml2-devel \
     yum install -y libjpeg-turbo-devel \
-    yum install -y gdal gdal-devel proj proj-devel proj-epsg
+    yum install -y gdal gdal-devel proj proj-devel proj-epsg geos-devel
 
 # Install additional tools
 RUN yum install -y unzip wget
