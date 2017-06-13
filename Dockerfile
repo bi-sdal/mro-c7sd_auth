@@ -2,7 +2,7 @@ FROM sdal/ldap-ssh-c7
 MAINTAINER "Aaron D. Schroeder" <aschroed@vt.edu>
 
 # Install R Package Prerequisites
-RUN yum install -y openssl-devel && \
+RUN yum install -y openssl-devel htop && \
     yum groupinstall -y 'Development Tools' && \
     yum install -y postgresql-devel && \
     yum install -y libcurl libcurl-devel xml2 libxml2-devel \
