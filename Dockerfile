@@ -5,9 +5,10 @@ MAINTAINER "Aaron D. Schroeder" <aschroed@vt.edu>
 RUN yum install -y openssl-devel htop && \
     yum groupinstall -y 'Development Tools' && \
     yum install -y postgresql-devel && \
-    yum install -y libcurl libcurl-devel xml2 libxml2-devel \
-    yum install -y libjpeg-turbo-devel \
-    yum install -y gdal gdal-devel proj proj-devel proj-epsg geos-devel
+    yum install -y libcurl libcurl-devel xml2 libxml2-devel && \
+    yum install -y libjpeg-turbo-devel && \
+    yum install -y gdal gdal-devel proj proj-devel proj-epsg && \
+    yum install -y geos-devel v8-314-devel
 
 # Install additional tools
 RUN yum install -y unzip wget
