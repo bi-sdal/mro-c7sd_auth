@@ -21,6 +21,7 @@ RUN \
 RUN /tmp/microsoft-r-open/install.sh -a -u
 
 # Configure CRAN Repositories
-RUN echo "r <- getOption('repos'); r['CRAN'] <- 'https://cloud.r-project.org/'; options(repos = r);" >> ~/.Rprofile
+RUN echo "r <- getOption('repos'); r['CRAN'] <- 'https://cloud.r-project.org/'; options(repos = r);" >> ~/.Rprofile && \\
+    echo ".libPaths('/rpkgs')" >> ~/.Rprofile
 
 CMD ["/usr/sbin/init"]
