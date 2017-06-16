@@ -11,7 +11,7 @@ RUN yum install -y openssl-devel htop && \
     yum install -y geos-devel v8-314-devel
 
 # Install additional tools
-RUN yum install -y unzip wget
+RUN yum install -y unzip wget htop
 
 # Get Microsoft R Open
 RUN cd /tmp/ && \
@@ -20,8 +20,7 @@ RUN cd /tmp/ && \
 RUN /tmp/microsoft-r-open/install.sh -a -u
 
 # Configure CRAN Repositories
-RUN echo "r <- getOption('repos'); r['CRAN'] <- 'https://cloud.r-project.org/'; options(repos = r);" >> ~/.Rprofile && \
-    echo ".libPaths('/rpkgs')" >> ~/.Rprofile
+RUN echo "r <- getOption('repos'); r['CRAN'] <- 'https://cloud.r-project.org/'; options(repos = r);" >> ~/.Rprofile
 
 COPY add_rpkgs.R add_rpkgs.R
 
