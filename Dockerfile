@@ -14,14 +14,17 @@ RUN yum install -y openssl-devel htop && \
 RUN yum install -y unzip wget
 
 # Get Microsoft R Open
-RUN \
-  cd /tmp/ && \
-  wget https://mran.microsoft.com/install/mro/3.4.0/microsoft-r-open-3.4.0.tar.gz && tar -xvzf microsoft-r-open-3.4.0.tar.gz
+RUN cd /tmp/ && \
+    wget https://mran.microsoft.com/install/mro/3.4.0/microsoft-r-open-3.4.0.tar.gz && tar -xvzf microsoft-r-open-3.4.0.tar.gz
 
 RUN /tmp/microsoft-r-open/install.sh -a -u
 
 # Configure CRAN Repositories
-RUN echo "r <- getOption('repos'); r['CRAN'] <- 'https://cloud.r-project.org/'; options(repos = r);" >> ~/.Rprofile && \\
+RUN echo "r <- getOption('repos'); r['CRAN'] <- 'https://cloud.r-project.org/'; options(repos = r);" >> ~/.Rprofile && \
     echo ".libPaths('/rpkgs')" >> ~/.Rprofile
+
+COPY add_rpkgs.R add_rpkgs.R
+
+RUN Rscript add_rpkgs.R
 
 CMD ["/usr/sbin/init"]
