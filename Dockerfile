@@ -8,7 +8,12 @@ RUN yum install -y openssl-devel htop && \
     yum install -y libcurl libcurl-devel xml2 libxml2-devel && \
     yum install -y libjpeg-turbo-devel && \
     yum install -y gdal gdal-devel proj proj-devel proj-epsg && \
-    yum install -y geos-devel v8-314-devel
+    yum install -y geos-devel v8-314-devel \
+    yum install -y openssl098e passwd pandoc \
+    yum install -y locales java-1.7.0-openjdk-devel
+
+# Plotly needs libcurl
+RUN yum install libcurl-devel -y
 
 # Install additional tools
 RUN yum install -y unzip wget htop
