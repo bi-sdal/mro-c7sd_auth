@@ -32,4 +32,6 @@ COPY add_rpkgs.R add_rpkgs.R
 
 RUN Rscript add_rpkgs.R
 
+RUN R CMD javareconf
+
 CMD ["/usr/sbin/init"]
