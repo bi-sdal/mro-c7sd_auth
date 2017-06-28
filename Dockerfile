@@ -28,6 +28,8 @@ COPY add_rpkgs.R add_rpkgs.R
 
 RUN Rscript add_rpkgs.R
 
+RUN yum install -y R-java R-java-devel
+
 RUN which java && \
     java -version && \
     R CMD javareconf
