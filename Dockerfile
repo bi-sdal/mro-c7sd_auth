@@ -2,7 +2,7 @@ FROM sdal/ldap-ssh-c7
 MAINTAINER "Aaron D. Schroeder" <aschroed@vt.edu>
 
 # Install R Package Prerequisites
-RUN yum install -y openssl-devel htop && \
+RUN yum install -y openssl-devel htop unzip wget htop && \
     yum groupinstall -y 'Development Tools' && \
     yum install -y postgresql-devel && \
     yum install -y libcurl libcurl-devel xml2 libxml2-devel && \
@@ -11,14 +11,9 @@ RUN yum install -y openssl-devel htop && \
     yum install -y geos-devel v8-314-devel \
     yum install -y openssl098e passwd pandoc \
     yum install -y locales which \
-    yum install -y dejavu-sans-fonts dejavu-serif-font \
-    yum install -y java
+    yum install -y dejavu-sans-fonts dejavu-serif-font
 
-# Plotly needs libcurl
-RUN yum install libcurl-devel -y
-
-# Install additional tools
-RUN yum install -y unzip wget htop
+RUN yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
 
 # Get Microsoft R Open
 RUN cd /tmp/ && \
@@ -33,6 +28,8 @@ COPY add_rpkgs.R add_rpkgs.R
 
 RUN Rscript add_rpkgs.R
 
-RUN R CMD javareconf
+RUN which java && \
+    java -version && \
+    R CMD javareconf
 
 CMD ["/usr/sbin/init"]
