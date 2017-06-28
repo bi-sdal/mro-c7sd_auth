@@ -10,8 +10,9 @@ RUN yum install -y openssl-devel htop && \
     yum install -y gdal gdal-devel proj proj-devel proj-epsg && \
     yum install -y geos-devel v8-314-devel \
     yum install -y openssl098e passwd pandoc \
-    yum install -y locales \
-    tum install -y java
+    yum install -y locales which \
+    yum install -y dejavu-sans-fonts dejavu-serif-font \
+    yum install -y java
 
 # Plotly needs libcurl
 RUN yum install libcurl-devel -y
