@@ -1,19 +1,8 @@
 FROM sdal/ldap-ssh-c7
 MAINTAINER "Aaron D. Schroeder" <aschroed@vt.edu>
 
-# Install R Package Prerequisites
 RUN yum install -y openssl-devel htop unzip wget htop && \
-    yum groupinstall -y 'Development Tools' && \
-    yum install -y postgresql-devel && \
-    yum install -y libcurl libcurl-devel xml2 libxml2-devel && \
-    yum install -y libjpeg-turbo-devel && \
-    yum install -y gdal gdal-devel proj proj-devel proj-epsg && \
-    yum install -y geos-devel v8-314-devel \
-    yum install -y openssl098e passwd pandoc \
-    yum install -y locales which \
-    yum install -y dejavu-sans-fonts dejavu-serif-font
-
-RUN yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
+    yum groupinstall -y 'Development Tools'
 
 # Get Microsoft R Open
 RUN cd /tmp/ && \
@@ -28,7 +17,18 @@ COPY add_rpkgs.R add_rpkgs.R
 
 RUN Rscript add_rpkgs.R
 
-RUN yum install -y R-java R-java-devel
+# Install R Package Prerequisites
+RUN yum install -y postgresql-devel && \
+    yum install -y libcurl libcurl-devel xml2 libxml2-devel && \
+    yum install -y libjpeg-turbo-devel && \
+    yum install -y gdal gdal-devel proj proj-devel proj-epsg && \
+    yum install -y geos-devel v8-314-devel && \
+    yum install -y openssl098e passwd pandoc && \
+    yum install -y locales which && \
+    yum install -y dejavu-sans-fonts dejavu-serif-font && \
+    yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel && \
+    yum install -y R-java R-java-devel && \
+    yum install -y ImageMagick ImageMagick-devel
 
 RUN which java && \
     java -version && \
