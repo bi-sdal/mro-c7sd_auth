@@ -36,4 +36,8 @@ RUN which java && \
     java -version && \
     R CMD javareconf
 
+# for some reason mro will point to base R instead of mro
+# this puts the Rprofile.site file in the 'correct' place
+COPY Rprofile.site /usr/lib64/R/etc/Rprofile.site
+
 CMD ["/usr/sbin/init"]
