@@ -13,7 +13,7 @@ RUN /tmp/microsoft-r-open/install.sh -a -u
 # Configure CRAN Repositories
 RUN echo "r <- getOption('repos'); r['CRAN'] <- 'https://cloud.r-project.org/'; options(repos = r);" >> ~/.Rprofile
 
-COPY add_rpkgs.R add_rpkgs.R
+COPY 01-setup_Rprofile_site.R 01-setup_Rprofile_site.R
 
 RUN Rscript add_rpkgs.R
 
