@@ -56,6 +56,9 @@ if (file.exists(fname)) {
 
     write("\n", file = fname, append = TRUE)
     write("\n", file = fname, append = TRUE)
+    
+    write("# set a CRAN mirror", file = fname, append = TRUE)
+    write('local({r <- getOption("repos") r["CRAN"] <- "https://cloud.r-project.org/" options(repos=r)})"', file = fname, append = TRUE)
 
 } else {
     stop("All your base are belong to us: no Rprofile.site found.")
