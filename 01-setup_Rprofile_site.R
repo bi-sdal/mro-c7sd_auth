@@ -58,7 +58,14 @@ if (file.exists(fname)) {
     write("\n", file = fname, append = TRUE)
     
     write("# set a CRAN mirror", file = fname, append = TRUE)
-    write('local({r <- getOption("repos") r["CRAN"] <- "https://cloud.r-project.org/" options(repos=r)})"', file = fname, append = TRUE)
+    write('local({r <- getOption("repos") r["CRAN"] <- "https://cloud.r-project.org/" options(repos=r)})"',
+          file = fname,
+          append = TRUE)
+    write("\n", file = fname, append = TRUE)
+
+    cat(readLines(fname) , sep = "\n")
+    
+    Sys.sleep(10)
 
 } else {
     print(site_path)
