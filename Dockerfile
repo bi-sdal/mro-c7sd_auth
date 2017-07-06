@@ -28,7 +28,8 @@ RUN yum install -y postgresql-devel && \
     yum install -y dejavu-sans-fonts dejavu-serif-font && \
     yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel && \
     yum install -y R-java R-java-devel && \
-    yum install -y ImageMagick ImageMagick-devel
+    yum install -y ImageMagick ImageMagick-devel && \
+    yum install -y libgfortran
 
 RUN which java && \
     java -version && \
