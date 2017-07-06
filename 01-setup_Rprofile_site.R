@@ -61,5 +61,8 @@ if (file.exists(fname)) {
     write('local({r <- getOption("repos") r["CRAN"] <- "https://cloud.r-project.org/" options(repos=r)})"', file = fname, append = TRUE)
 
 } else {
-    stop("All your base are belong to us: no Rprofile.site found.")
+    print(site_path)
+    print(fname)
+    print("All your base are belong to us: no Rprofile.site found.")
+    quit(save = "no", status 1, runLast = FALSE)
 }
