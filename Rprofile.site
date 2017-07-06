@@ -1,4 +1,8 @@
-# [1] "RProfile.site exists here: /usr/lib64/microsoft-r/3.4/lib64/R/etc/Rprofile.site"
+# [1] "RProfile.site exists here in MRO: /usr/lib64/microsoft-r/3.4/lib64/R/etc/Rprofile.site"
+# but will be in "/usr/lib64/R/etc/Rprofile.site"
+# in the base R
+# this is here to copy it in to the base R location becuase for some reason
+# R stopped looking for it in the MRO location
 
 if (!identical(system.file(package="RevoUtils"), "")) {
 Revo.version <- RevoUtils:::makeRevoVersion()
