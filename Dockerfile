@@ -29,8 +29,11 @@ RUN yum install -y postgresql-devel && \
     yum install -y dejavu-sans-fonts dejavu-serif-font && \
     yum install -y ImageMagick ImageMagick-devel && \
     yum install -y libgfortran && \
-    yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel && \
-    yum install -y R-java R-java-devel
+    yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
+
+# pretty sure this breaks all my .libPath stuff
+# because it installs r-core and r-core-devel
+# RUN yum install -y R-java R-java-devel
 
 RUN which java && \
     java -version && \
