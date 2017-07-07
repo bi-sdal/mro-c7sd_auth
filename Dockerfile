@@ -25,6 +25,7 @@ RUN yum install -y postgresql-devel && \
     yum install -y gdal gdal-devel proj proj-devel proj-epsg && \
     yum install -y udunits2 udunits2-devel && \
     yum install -y geos-devel v8-314-devel && \
+    yum install -y gsl-devel && \
     yum install -y openssl098e passwd pandoc && \
     yum install -y locales which && \
     yum install -y dejavu-sans-fonts dejavu-serif-font && \
