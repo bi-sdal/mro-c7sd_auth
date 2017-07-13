@@ -46,7 +46,7 @@ if (file.exists(fname)) {
     write("#", file = fname, append = TRUE)
     write("#", file = fname, append = TRUE)
 
-    write(".libPaths('/rpkgs')", file = fname, append = TRUE)
+    ## write(".libPaths('/rpkgs')", file = fname, append = TRUE)
 
     write("#", file = fname, append = TRUE)
     write("#", file = fname, append = TRUE)

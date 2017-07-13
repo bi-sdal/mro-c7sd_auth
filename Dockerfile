@@ -14,9 +14,9 @@ RUN /tmp/microsoft-r-open/install.sh -a -u
 # Configure CRAN Repositories
 RUN echo "r <- getOption('repos'); r['CRAN'] <- 'https://cloud.r-project.org/'; options(repos = r);" >> ~/.Rprofile
 
-# COPY 01-setup_Rprofile_site.R 01-setup_Rprofile_site.R
+COPY 01-setup_Rprofile_site.R 01-setup_Rprofile_site.R
 
-# RUN Rscript 01-setup_Rprofile_site.R
+RUN Rscript 01-setup_Rprofile_site.R
 
 # Install R Package Prerequisites
 RUN yum install -y postgresql-devel && \
