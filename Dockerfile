@@ -50,9 +50,9 @@ RUN cd /tmp/ && \
     make && \
     make install
 
+# fix rgdal
 RUN echo "/usr/local/lib" >> /etc/ld.so.conf.d/R-dependencies-x86_64.conf && \
     ldconfig
-
 
 # pretty sure this breaks all my .libPath stuff
 # because it installs r-core and r-core-devel
@@ -62,9 +62,13 @@ RUN which java && \
     java -version && \
     R CMD javareconf
 
+RUN Rscript -e "install.packages('udunits2', type = 'source', repo = 'cran.rstudio.com', configure.args = '--with-udunits2-include=/usr/include/udunits2 --with-udunits2-lib=/usr/local/lib')"
+
 # for some reason mro will point to base R instead of mro
 # this puts the Rprofile.site file in the 'correct' place
 # maybe this was cuased by the R-java stuff above
 # COPY Rprofile.site /usr/lib64/R/etc/Rprofile.site
+
+COPY Makeconf /usr/lib64/microsoft-r/3.4/lib64/R/etc/Makeconf
 
 CMD ["/usr/sbin/init"]
