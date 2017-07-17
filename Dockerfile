@@ -15,7 +15,6 @@ RUN /tmp/microsoft-r-open/install.sh -a -u
 RUN echo "r <- getOption('repos'); r['CRAN'] <- 'https://cloud.r-project.org/'; options(repos = r);" >> ~/.Rprofile
 
 COPY 01-setup_Rprofile_site.R 01-setup_Rprofile_site.R
-
 RUN Rscript 01-setup_Rprofile_site.R
 
 # Install R Package Prerequisites
@@ -54,20 +53,11 @@ RUN cd /tmp/ && \
 RUN echo "/usr/local/lib" >> /etc/ld.so.conf.d/R-dependencies-x86_64.conf && \
     ldconfig
 
-# pretty sure this breaks all my .libPath stuff
-# because it installs r-core and r-core-devel
-# RUN yum install -y R-java R-java-devel
-
 RUN which java && \
     java -version && \
     R CMD javareconf
 
 RUN Rscript -e "install.packages('udunits2', type = 'source', repo = 'cran.rstudio.com', configure.args = '--with-udunits2-include=/usr/include/udunits2 --with-udunits2-lib=/usr/local/lib')"
-
-# for some reason mro will point to base R instead of mro
-# this puts the Rprofile.site file in the 'correct' place
-# maybe this was cuased by the R-java stuff above
-# COPY Rprofile.site /usr/lib64/R/etc/Rprofile.site
 
 COPY Makeconf /usr/lib64/microsoft-r/3.4/lib64/R/etc/Makeconf
 
