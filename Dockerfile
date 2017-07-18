@@ -65,7 +65,8 @@ RUN which java && \
     java -version && \
     R CMD javareconf
 
-COPY 04-check_rpkgs.R 04-check_rpkgs.R
-RUN Rscript 04-check_rpkgs.R
+COPY 04-install_rpkgs.R 99-test_rpkgs.R ./
+RUN Rscript 04-check_rpkgs.R && \
+    Rscript 99-test_rpkgs.R
 
 CMD ["/usr/sbin/init"]
