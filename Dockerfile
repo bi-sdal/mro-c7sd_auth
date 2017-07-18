@@ -2,7 +2,7 @@ FROM sdal/ldap-ssh-c7
 MAINTAINER "Aaron D. Schroeder" <aschroed@vt.edu>
 
 # Install R Package Prerequisites
-RUN yum install -y openssl-devel unzip wget && \
+RUN yum install -y openssl-devel unzip wget p7zip && \
     yum groupinstall -y 'Development Tools'
 
 # Get Microsoft R Open
@@ -12,7 +12,7 @@ RUN cd /tmp/ && \
 RUN /tmp/microsoft-r-open/install.sh -a -u
 
 # Configure CRAN Repositories
-RUN echo "r <- getOption('repos'); r['CRAN'] <- 'https://cloud.r-project.org/'; options(repos = r);" >> ~/.Rprofile
+# RUN echo "r <- getOption('repos'); r['CRAN'] <- 'https://cloud.r-project.org/'; options(repos = r);" >> ~/.Rprofile
 
 COPY 01-setup_Rprofile_site.R 01-setup_Rprofile_site.R
 RUN Rscript 01-setup_Rprofile_site.R
@@ -31,34 +31,41 @@ RUN yum install -y postgresql-devel && \
     yum install -y libgfortran && \
     yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
 
+# no need for these since we compile them from source below
 # RUN yum install -y gdal gdal-devel proj proj-devel proj-epsg && \
 
+COPY 02-01-wget_files.txt 02-02-wget_sha256sum.txt 03-01-7z_sha256sum.txt pre_compiled_bin /tmp/
+
 RUN cd /tmp/ && \
-    wget http://download.osgeo.org/gdal/2.2.0/gdal220.zip && \
-    unzip gdal220.zip && \
+    sha256sum -c 02-02-wget_sha256sum.txt && \
+    sleep 10 && \
+    7za e gdal.7z.001 && \
+    sha256sum -c 03-01-7z_sha256sum.txt && \
+    sleep 10 && \
+    tar -zxvf gdal-2.2.0-bin.tar.gz && \
+    tar -zxvf proj-4.9.3-bin.tar.gz && \
+    sleep 10
+
+RUN cd /tmp/ && \
     cd gdal-2.2.0 && \
-    ./configure && \
-    make && \
     make install
 
 RUN cd /tmp/ && \
-    wget http://download.osgeo.org/proj/proj-4.9.3.tar.gz && \
-    tar xvf proj-4.9.3.tar.gz && \
     cd proj-4.9.3 && \
-    ./configure && \
-    make && \
     make install
 
 # fix rgdal
 RUN echo "/usr/local/lib" >> /etc/ld.so.conf.d/R-dependencies-x86_64.conf && \
     ldconfig
 
+# Fix C++11 error
+COPY Makeconf /usr/lib64/microsoft-r/3.4/lib64/R/etc/Makeconf
+
 RUN which java && \
     java -version && \
     R CMD javareconf
 
-RUN Rscript -e "install.packages('udunits2', type = 'source', repo = 'cran.rstudio.com', configure.args = '--with-udunits2-include=/usr/include/udunits2 --with-udunits2-lib=/usr/local/lib')"
-
-COPY Makeconf /usr/lib64/microsoft-r/3.4/lib64/R/etc/Makeconf
+COPY 04-check_rpkgs.R 04-check_rpkgs.R
+RUN Rscript 04-check_rpkgs.R
 
 CMD ["/usr/sbin/init"]

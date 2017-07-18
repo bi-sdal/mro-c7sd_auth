@@ -48,6 +48,9 @@ if (file.exists(fname)) {
 
     ## write(".libPaths('/rpkgs')", file = fname, append = TRUE)
 
+    # fixes tigris being able to be loaded by user while installed by root
+    write("options(tigris_use_cache = TRUE)", file = fname, append = TRUE)
+
     write("#", file = fname, append = TRUE)
     write("#", file = fname, append = TRUE)
     write("#", file = fname, append = TRUE)
@@ -56,7 +59,7 @@ if (file.exists(fname)) {
 
     write("\n", file = fname, append = TRUE)
     write("\n", file = fname, append = TRUE)
-    
+
     write("# set a CRAN mirror", file = fname, append = TRUE)
     write('local({r <- getOption("repos"); r["CRAN"] <- "https://cloud.r-project.org/"; options(repos=r)})',
           file = fname,
@@ -64,7 +67,7 @@ if (file.exists(fname)) {
     write("\n", file = fname, append = TRUE)
 
     cat(readLines(fname) , sep = "\n")
-    
+
     Sys.sleep(10)
 
 } else {
