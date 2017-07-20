@@ -1,3 +1,5 @@
+install.packages(c("curl", "httr"))
+
 install.packages(
     'udunits2', type = 'source', repo = 'cran.rstudio.com',
     configure.args = '--with-udunits2-include=/usr/include/udunits2 --with-udunits2-lib=/usr/local/lib'
