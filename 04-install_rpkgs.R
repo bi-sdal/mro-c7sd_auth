@@ -1,3 +1,8 @@
+## need this to get tigris to download files correctly
+##
+## as well as installing github packages
+## otherwise you'd get SSL CA cert  error
+## https://github.com/walkerke/tigris/issues/40
 install.packages(c("curl", "httr"))
 
 install.packages(

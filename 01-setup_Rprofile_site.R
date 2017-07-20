@@ -30,7 +30,6 @@
 #   file.create("~/.Rprofile")    # (don't overwrite it)
 # file.edit("~/.Rprofile")
 
-
 site_path = R.home(component = "home")
 fname = file.path(site_path, "etc", "Rprofile.site")
 
@@ -48,8 +47,11 @@ if (file.exists(fname)) {
 
     ## write(".libPaths('/rpkgs')", file = fname, append = TRUE)
 
-    # fixes tigris being able to be loaded by user while installed by root
+    write("# fixes tigris being able to be loaded by user while installed by root",
+          file = fname, append = TRUE)
     write("options(tigris_use_cache = TRUE)", file = fname, append = TRUE)
+    write('local({r <- getOption("tigris_use_cache"); r["tigris_use_cache"] <- TRUE; options(tigris_use_cache=r)})',
+          file = fname, append = TRUE)
 
     write("#", file = fname, append = TRUE)
     write("#", file = fname, append = TRUE)
@@ -62,8 +64,7 @@ if (file.exists(fname)) {
 
     write("# set a CRAN mirror", file = fname, append = TRUE)
     write('local({r <- getOption("repos"); r["CRAN"] <- "https://cloud.r-project.org/"; options(repos=r)})',
-          file = fname,
-          append = TRUE)
+          file = fname, append = TRUE)
     write("\n", file = fname, append = TRUE)
 
     cat(readLines(fname) , sep = "\n")

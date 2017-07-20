@@ -34,8 +34,8 @@ RUN yum install -y postgresql-devel && \
 # no need for these since we compile them from source below
 # RUN yum install -y gdal gdal-devel proj proj-devel proj-epsg && \
 
+# install pre-compiled versions
 COPY 02-01-wget_files.txt 02-02-wget_sha256sum.txt 03-01-7z_sha256sum.txt pre_compiled_bin /tmp/
-
 RUN cd /tmp/ && \
     sha256sum -c 02-02-wget_sha256sum.txt && \
     sleep 10 && \
@@ -45,14 +45,28 @@ RUN cd /tmp/ && \
     tar -zxvf gdal-2.2.0-bin.tar.gz && \
     tar -zxvf proj-4.9.3-bin.tar.gz && \
     sleep 10
-
 RUN cd /tmp/ && \
     cd gdal-2.2.0 && \
     make install
-
 RUN cd /tmp/ && \
     cd proj-4.9.3 && \
     make install
+
+# download and compile from source
+# RUN cd /tmp/ && \
+#     wget http://download.osgeo.org/gdal/2.2.0/gdal220.zip && \
+#     unzip gdal220.zip && \
+#     cd gdal-2.2.0 && \
+#     ./configure && \
+#     make && \
+#     make install
+# RUN cd /tmp/ && \
+#     wget http://download.osgeo.org/proj/proj-4.9.3.tar.gz && \
+#     tar xvf proj-4.9.3.tar.gz && \
+#     cd proj-4.9.3 && \
+#     ./configure && \
+#     make && \
+#     make install
 
 # fix rgdal
 RUN echo "/usr/local/lib" >> /etc/ld.so.conf.d/R-dependencies-x86_64.conf && \
@@ -65,8 +79,10 @@ RUN which java && \
     java -version && \
     R CMD javareconf
 
-COPY 04-install_rpkgs.R 99-test_rpkgs.R ./
-RUN Rscript 04-check_rpkgs.R && \
-    Rscript 99-test_rpkgs.R
+COPY 04-install_rpkgs.R  ./
+RUN Rscript 04-install_rpkgs.R
+
+COPY 99-test_rpkgs.R ./
+RUN Rscript 99-test_rpkgs.R
 
 CMD ["/usr/sbin/init"]
