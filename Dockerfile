@@ -22,6 +22,8 @@ RUN Rscript 01-setup_Rprofile_site.R
 RUN yum install -y postgresql-devel && \
     yum install -y libcurl libcurl-devel xml2 libxml2-devel && \
     yum install -y libjpeg-turbo-devel librsvg2-devel && \
+    yum install -y cairo-devel && \
+    yum install -y protobuf-devel && \
     yum install -y udunits2 udunits2-devel && \
     yum install -y geos-devel v8-314-devel && \
     yum install -y gsl-devel && \
