@@ -47,19 +47,19 @@ local(
 	if ( identical(.Platform$OS.type, "unix") && length(grep("el7.x86_64",Sys.info()["release"]))){
 		isMMLSupported <- TRUE
 	}
-	
+
 	if (!identical(system.file(package="RevoScaleR") , "")){
-        options(defaultPackages=c(getOption("defaultPackages"), "rpart", "lattice", "RevoScaleR", 
-            if(!identical(system.file(package="mrsdeploy"), "") && identical(.Platform$OS, "windows")) "mrsdeploy", 
+        options(defaultPackages=c(getOption("defaultPackages"), "rpart", "lattice", "RevoScaleR",
+            if(!identical(system.file(package="mrsdeploy"), "") && identical(.Platform$OS, "windows")) "mrsdeploy",
 			# we have MicrosoftML package
-			if(!identical(system.file(package="MicrosoftML"),"") && isMMLSupported) "MicrosoftML", 
+			if(!identical(system.file(package="MicrosoftML"),"") && isMMLSupported) "MicrosoftML",
 			"RevoMods", "RevoUtils", "RevoUtilsMath"))
         if (nchar(hostName <- Sys.getenv("REVOHADOOPHOST")) && nchar(portNumber <- Sys.getenv("REVOHADOOPPORT")))
 		{
 			 RevoScaleR::rxHdfsConnect(hostName=hostName, portNumber=as.numeric(portNumber))
 		}
-	} 
-	
+	}
+
 	# branding information
 	.RevoVersionShort <- Revo.version$version.string
 	.RevoVersionShortLen <- regexpr("^.* \\d+\\.\\d+", .RevoVersionShort,  perl=TRUE)
@@ -76,19 +76,19 @@ local(
 			options(browser = browseAvail[which(browseAvail != "")[1]])
 		}
 	}
-	
-    if (.Platform$OS.type == "windows" ) { 
-       options(help_type="html") 
-    } 
 
-    load_if_installed <- function(package) { 
-       if (!identical(system.file(package="RevoUtilsMath"), "")) { 
-       do.call('library', list(package)) 
-       return(TRUE) 
-       } else { 
-          return(FALSE) 
-	   }  
-    } 
+    if (.Platform$OS.type == "windows" ) {
+       options(help_type="html")
+    }
+
+    load_if_installed <- function(package) {
+       if (!identical(system.file(package="RevoUtilsMath"), "")) {
+       do.call('library', list(package))
+       return(TRUE)
+       } else {
+          return(FALSE)
+	   }
+    }
 
 	if (identical(system.file(package="RevoScaleR"), "")) {
 		if (load_if_installed("RevoUtilsMath")) {
@@ -99,12 +99,12 @@ local(
 		}
 
 		if (Sys.info()["sysname"] == "Darwin") {
-			options(download.file.method = "libcurl") 
-			hw.ncpu <- try(system('sysctl hw.physicalcpu', intern = TRUE)) 
-			if (!inherits(hw.ncpu, "try-error")) { 
-				ncores <- sub("hw.physicalcpu: ", "", hw.ncpu) 
+			options(download.file.method = "libcurl")
+			hw.ncpu <- try(system('sysctl hw.physicalcpu', intern = TRUE))
+			if (!inherits(hw.ncpu, "try-error")) {
+				ncores <- sub("hw.physicalcpu: ", "", hw.ncpu)
 				MKLmsg = paste0("Multithreaded BLAS/LAPACK libraries detected. Using ", ncores, " cores for math algorithms.\n")
-			} 
+			}
 		} else {
 			if (load_if_installed("RevoUtilsMath")) {
 				ncores <- RevoUtilsMath::getMKLthreads()
@@ -112,13 +112,13 @@ local(
 			} else {
 				MROversion <- paste(Revo.version$major, Revo.version$minor, sep=".")
 				MKLmsg <- "No performance acceleration libraries were detected. To take advantage of \nthe available processing power, also install MKL for R Open. \n\nVisit http://go.microsoft.com/fwlink/?LinkID=698301 for more details."
-			}      
+			}
 		}
 	} else {
 		ncores <- RevoUtilsMath::getMKLthreads()
 		MKLmsg <- ""
 	}
-	
+
 	quiet <- any(match(c("-q", "--silent", "--quiet", "--slave"), commandArgs()), na.rm=TRUE)
 	if (!quiet && !identical(system.file(package="RevoScaleR") , "")) {
         cat("Microsoft R Open ",R.version$major,".",R.version$minor,"\n",sep="")
@@ -132,10 +132,10 @@ local(
 		   RclientPkgName <- "MicrosoftR"
 		   pkgVersion <- utils::packageDescription(RclientPkgName)$Version
 		   cat("Loading Microsoft R Client packages, version ", pkgVersion,". \n", sep = "")
-		   cat("Microsoft R Client limits some functions to available memory.\n") 
+		   cat("Microsoft R Client limits some functions to available memory.\n")
 		   cat("See: https://go.microsoft.com/fwlink/?linkid=799476 for information\n",sep="")
 		   cat("about additional features.\n\n",sep="")
-		}   
+		}
 		cat("Type 'readme()' for release notes, privacy() for privacy policy, or\n", sep = "")
 		cat("'RevoLicense()' for licensing information.\n\n", sep = "")
         if (MKLmsg == "") {
@@ -158,12 +158,12 @@ local(
 		cat("\nDefault CRAN mirror snapshot taken on ",repos.date, ".", sep = "")
 		cat("\n", "See: https://mran.microsoft.com/.",sep="")
 		cat("\n\n")
-	}	
+	}
 }
 )
 
 # Somebody set up us the bomb
-.libPaths('/rpkgs')
+.libPaths(c('/rpkgs', .libPaths()))
 
 # set a CRAN mirror
 local({r <- getOption("repos")

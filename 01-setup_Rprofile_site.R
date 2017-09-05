@@ -45,7 +45,7 @@ if (file.exists(fname)) {
     write("#", file = fname, append = TRUE)
     write("#", file = fname, append = TRUE)
 
-    ## write(".libPaths('/rpkgs')", file = fname, append = TRUE)
+    write(".libPaths(c('/rpkgs', .libPaths()))", file = fname, append = TRUE)
 
     write("# fixes tigris being able to be loaded by user while installed by root",
           file = fname, append = TRUE)

@@ -7,7 +7,8 @@ RUN yum install -y openssl-devel unzip wget p7zip && \
 
 # Get Microsoft R Open
 RUN cd /tmp/ && \
-    wget https://mran.microsoft.com/install/mro/3.4.0/microsoft-r-open-3.4.0.tar.gz && tar -xvzf microsoft-r-open-3.4.0.tar.gz
+    wget https://mran.microsoft.com/install/mro/3.4.0/microsoft-r-open-3.4.0.tar.gz && \
+    tar -xvzf microsoft-r-open-3.4.0.tar.gz
 
 RUN /tmp/microsoft-r-open/install.sh -a -u
 
@@ -79,10 +80,10 @@ RUN which java && \
     java -version && \
     R CMD javareconf
 
-COPY 04-install_rpkgs.R  ./
-RUN Rscript 04-install_rpkgs.R
+# COPY 04-install_rpkgs.R  ./
+# RUN Rscript 04-install_rpkgs.R
 
-COPY 99-test_rpkgs.R ./
-RUN Rscript 99-test_rpkgs.R
+# COPY 99-test_rpkgs.R ./
+# RUN Rscript 99-test_rpkgs.R
 
 CMD ["/usr/sbin/init"]
