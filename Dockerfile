@@ -33,7 +33,8 @@ RUN yum install -y postgresql-devel && \
     yum install -y ImageMagick ImageMagick-devel && \
     yum install -y libgfortran && \
     yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel && \
-    yum install -y unixodbc-devel poppler-cpp-devel
+    yum install -y unixodbc-devel poppler-cpp-devel && \
+    yum install -y unixODBC unixODBC-devel postgresql-odbc
 
 # no need for these since we compile them from source below
 # RUN yum install -y gdal gdal-devel proj proj-devel proj-epsg && \
