@@ -7,8 +7,9 @@ RUN yum install -y openssl-devel unzip wget p7zip && \
 
 # Get Microsoft R Open
 RUN cd /tmp/ && \
-    wget https://mran.microsoft.com/install/mro/3.4.0/microsoft-r-open-3.4.0.tar.gz && \
-    tar -xvzf microsoft-r-open-3.4.0.tar.gz
+    #wget https://mran.microsoft.com/install/mro/3.4.0/microsoft-r-open-3.4.0.tar.gz && \
+    wget https://mran.blob.core.windows.net/install/mro/3.4.3/microsoft-r-open-3.4.3.tar.gz && \
+    tar -xvzf microsoft-r-open-3.4.3.tar.gz
 
 RUN /tmp/microsoft-r-open/install.sh -a -u
 
@@ -78,7 +79,7 @@ RUN echo "/usr/local/lib" >> /etc/ld.so.conf.d/R-dependencies-x86_64.conf && \
     ldconfig
 
 # Fix C++11 error
-COPY Makeconf /usr/lib64/microsoft-r/3.4/lib64/R/etc/Makeconf
+#COPY Makeconf /usr/lib64/microsoft-r/3.4/lib64/R/etc/Makeconf
 
 RUN which java && \
     java -version && \
