@@ -1,4 +1,4 @@
-FROM sdal/ldap-ssh-c7
+FROM sdal/c7sd_auth:latest
 MAINTAINER "Aaron D. Schroeder" <aschroed@vt.edu>
 
 # Install R Package Prerequisites
@@ -7,8 +7,8 @@ RUN yum install -y openssl-devel unzip wget p7zip && \
 
 # Get Microsoft R Open
 RUN cd /tmp/ && \
-    wget https://mran.microsoft.com/install/mro/3.4.0/microsoft-r-open-3.4.0.tar.gz && \
-    tar -xvzf microsoft-r-open-3.4.0.tar.gz
+    wget https://mran.blob.core.windows.net/install/mro/3.4.3/microsoft-r-open-3.4.3.tar.gz && \
+    tar -xvzf microsoft-r-open-3.4.3.tar.gz
 
 RUN /tmp/microsoft-r-open/install.sh -a -u
 
