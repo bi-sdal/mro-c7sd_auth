@@ -25,6 +25,7 @@ RUN yum install -y postgresql-devel && \
     yum install -y cairo-devel && \
     yum install -y protobuf-devel && \
     yum install -y udunits2 udunits2-devel && \
+    yum install -y jq-devel && \
     yum install -y geos-devel v8-314-devel && \
     yum install -y gsl-devel && \
     yum install -y openssl098e passwd pandoc && \
