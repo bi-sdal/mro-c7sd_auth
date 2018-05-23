@@ -83,7 +83,8 @@ RUN echo "/usr/local/lib" >> /etc/ld.so.conf.d/R-dependencies-x86_64.conf && \
 
 RUN which java && \
     java -version && \
-    R CMD javareconf
+    R CMD javareconf && \
+    Rscript -e "update.packages(ask = FALSE, checkBuilt = TRUE)"
 
 # COPY 04-install_rpkgs.R  ./
 # RUN Rscript 04-install_rpkgs.R
